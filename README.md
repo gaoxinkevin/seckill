@@ -1,6 +1,7 @@
 # 约苗秒杀 
 **共享资源，仅能用于学习，请勿用于商业。**  
 **Sharing of resources, can only be used for learning, not for business！！！**
+
 **来源：https://github.com/lyrric/seckill**
 ## 界面
 ### 主界面
