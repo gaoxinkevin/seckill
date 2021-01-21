@@ -128,8 +128,8 @@ public class MainFrame extends JFrame {
         provinceBox.addItemListener(itemListener);
         cityBox = new JComboBox<>( ParseUtil.getChildren("直辖市").toArray(new Area[0]));
 
-        provinceBox.setBounds(20, 275, 100, 20);
-        cityBox.setBounds(130, 275, 80, 20);
+        provinceBox.setBounds(20, 275, 150, 20);
+        cityBox.setBounds(180, 275, 130, 20);
 
         JButton setAreaBtn = new JButton("确定");
         setAreaBtn.addActionListener(e->{
@@ -137,7 +137,7 @@ public class MainFrame extends JFrame {
             Config.regionCode = selectedItem.getValue();
             appendMsg("已选择地区:"+selectedItem.getName());
         });
-        setAreaBtn.setBounds(220, 270, 80, 30);
+        setAreaBtn.setBounds(320, 270, 80, 30);
 
         scrollPane.setBounds(10,10,560,200);
 
