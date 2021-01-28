@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -30,7 +31,7 @@ public class SecKillService {
 
     private final Logger logger = LogManager.getLogger(SecKillService.class);
 
-    private ExecutorService service = Executors.newFixedThreadPool(300);
+    private ExecutorService service = Executors.newFixedThreadPool(220);
 
     public SecKillService() {
         httpService = new HttpService();
@@ -56,8 +57,8 @@ public class SecKillService {
                     logger.info("Thread ID：{}，抢购成功", id);
                 } catch (BusinessException e) {
                     logger.info("Thread ID: {}, 抢购失败: {}", Thread.currentThread().getId(), e.getErrMsg());
-                    //如果当前时间离开始时间120秒后，或者已经成功抢到则不再继续
-                    if (System.currentTimeMillis() > startDate + 1000 * 60 * 2 || success.get()) {
+                    //如果当前时间离开始时间五分钟后，或者已经成功抢到则不再继续
+                    if (System.currentTimeMillis() > startDate + 1000 * 60 * 5 || success.get()) {
                         return;
                     }
 //                    if("操作过于频繁,请稍后再试!".equals(e.getErrMsg()) && new Random().nextBoolean()){
@@ -81,22 +82,38 @@ public class SecKillService {
         //如何保证能在秒杀时间点瞬间并发？
         //提前2000毫秒开始秒杀
         logger.info("###########提前2秒 开始秒杀###########");
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             service.submit(task);
         }
-        //提前1000毫秒开始秒杀
+        //提前1500毫秒开始秒杀
         do {
             now = System.currentTimeMillis();
-        } while (now + 1000 < startDate);
+        } while (now + 1500 < startDate);
         logger.info("###########第一波 开始秒杀###########");
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             service.submit(task);
         }
-        //提前500毫秒开始秒杀
+        //提前1200毫秒开始秒杀
         do {
             now = System.currentTimeMillis();
-        } while (now + 500 < startDate);
+        } while (now + 1200 < startDate);
         logger.info("###########第二波 开始秒杀###########");
+        for (int i = 0; i < 10; i++) {
+            service.submit(task);
+        }
+        //提前700毫秒开始秒杀
+        do {
+            now = System.currentTimeMillis();
+        } while (now + 700 < startDate);
+        logger.info("###########第三波 开始秒杀###########");
+        for (int i = 0; i < 10; i++) {
+            service.submit(task);
+        }
+        //提前300毫秒开始秒杀
+        do {
+            now = System.currentTimeMillis();
+        } while (now + 300 < startDate);
+        logger.info("###########第四波 开始秒杀###########");
         for (int i = 0; i < 20; i++) {
             service.submit(task);
         }
@@ -104,23 +121,15 @@ public class SecKillService {
         do {
             now = System.currentTimeMillis();
         } while (now + 200 < startDate);
-        logger.info("###########第三波 开始秒杀###########");
-        for (int i = 0; i < 40; i++) {
-            service.submit(task);
-        }
-        //提前100毫秒开始秒杀
-        do {
-            now = System.currentTimeMillis();
-        } while (now + 100 < startDate);
-        logger.info("###########第四波 开始秒杀###########");
-        for (int i = 0; i < 40; i++) {
-            service.submit(task);
-        }
-        //准点（提前20毫秒）秒杀
-        do {
-            now = System.currentTimeMillis();
-        } while (now + 20 < startDate);
         logger.info("###########第五波 开始秒杀###########");
+        for (int i = 0; i < 30; i++) {
+            service.submit(task);
+        }
+        //准点（提前30毫秒）秒杀
+        do {
+            now = System.currentTimeMillis();
+        } while (now + 30 < startDate);
+        logger.info("###########第六波 开始秒杀###########");
         for (int i = 0; i < 40; i++) {
             service.submit(task);
         }
