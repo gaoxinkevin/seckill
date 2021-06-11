@@ -51,14 +51,14 @@ public class SecKillService {
                 try {
                     //1.直接秒杀、获取秒杀资格
                     long id = Thread.currentThread().getId();
-                    logger.info("Thread ID：{}，发送请求", id);
+//                    logger.info("Thread ID：{}，发送请求", id);
                     orderId.set(httpService.secKill(vaccineId.toString(), "1", Config.memberId.toString(), Config.idCard));
                     success.set(true);
                     logger.info("Thread ID：{}，抢购成功", id);
                 } catch (BusinessException e) {
                     logger.info("Thread ID: {}, 抢购失败: {}", Thread.currentThread().getId(), e.getErrMsg());
-                    //如果当前时间离开始时间五分钟后，或者已经成功抢到则不再继续
-                    if (System.currentTimeMillis() > startDate + 1000 * 60 * 5 || success.get()) {
+                    //如果当前时间离开始时间十分钟后，或者已经成功抢到则不再继续
+                    if (System.currentTimeMillis() > startDate + 1000 * 60 * 10 || success.get() || "该秒杀不存在或已结束!".equals(e.getErrMsg())) {
                         return;
                     }
 //                    if("操作过于频繁,请稍后再试!".equals(e.getErrMsg()) && new Random().nextBoolean()){
